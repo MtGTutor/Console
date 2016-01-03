@@ -1,0 +1,23 @@
+{
+  "name": "mtgtutor/console",
+  "description": "CLI",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Pascal Kleindienst",
+      "email": "pascal@mtg-tutor.de"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "lciolecki/php-image-optimizer": "dev-master",
+    "intervention/image": "dev-master",
+    "symfony/console": "^2.8"
+  },
+  "autoload": {
+    "psr-4": {
+      "MtGTutor\\Console\\": "src/"
+    }
+  }
+}
