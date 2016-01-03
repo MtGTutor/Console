@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php
+// set to run indefinitely
+set_time_limit(0);
+
+// include the composer autoloader
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use MtGTutor\Console\Application;
+
+// start app
+$app = new Application();
+$app->run();
