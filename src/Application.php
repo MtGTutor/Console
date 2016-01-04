@@ -1,6 +1,7 @@
 <?php
 namespace MtGTutor\Console;
 
+use MtGTutor\Console\Commands\ServerStatus;
 use Symfony\Component\Console\Application as BaseApplication;
 
 /**
@@ -39,5 +40,13 @@ class Application extends BaseApplication
             '                      /_/                                               ' . PHP_EOL;
 
         parent::__construct($name . static::NAME, static::VERSION);
+    }
+
+    /**
+     * Setup commands
+     */
+    public function setup()
+    {
+        $this->add(new ServerStatus());
     }
 }
