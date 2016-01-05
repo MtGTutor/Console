@@ -2,6 +2,7 @@
 namespace MtGTutor\Console;
 
 use MtGTutor\Console\Commands\ServerStatus;
+use MtGTutor\Console\Commands\SetInfos;
 use Symfony\Component\Console\Application as BaseApplication;
 
 /**
@@ -48,5 +49,6 @@ class Application extends BaseApplication
     public function setup()
     {
         $this->add(new ServerStatus());
+        $this->add(new SetInfos());
     }
 }
