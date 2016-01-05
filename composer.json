@@ -13,12 +13,14 @@
     "php": ">=5.4.0",
     "lciolecki/php-image-optimizer": "dev-master",
     "intervention/image": "dev-master",
-    "symfony/console": "^2.8"
+    "symfony/console": "^2.8",
+    "fabpot/goutte": "^2.0"
   },
   "require-dev": {
     "phpunit/phpunit" : "4.*",
     "scrutinizer/ocular": "~1.1",
-    "squizlabs/php_codesniffer": "~2.3"
+    "squizlabs/php_codesniffer": "~2.3",
+    "symfony/validator": "^2.8"
   },
   "autoload": {
     "psr-4": {

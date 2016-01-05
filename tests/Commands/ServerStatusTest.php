@@ -1,6 +1,6 @@
 <?php namespace MtGTutor\Console\Test\Commands;
 
-use MtGTutor\Console\Test\CommandTesterTrait;
+use MtGTutor\Console\Test\TestTrait;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -9,7 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ServerStatusTest extends \PHPUnit_Framework_TestCase
 {
-    use CommandTesterTrait;
+    use TestTrait;
 
     /**
      * Sets command
@@ -17,6 +17,7 @@ class ServerStatusTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         parent::setUp();
+        $this->setupApp();
         $this->setCommandTester('server:status');
     }
 
