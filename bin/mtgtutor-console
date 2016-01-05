@@ -10,4 +10,5 @@ use MtGTutor\Console\Application;
 
 // start app
 $app = new Application();
+$app->setup();
 $app->run();
