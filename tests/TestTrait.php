@@ -1,10 +1,10 @@
 <?php namespace MtGTutor\Console\Test;
 
 use MtGTutor\Console\Application;
-use Symfony\Component\Console\Tester\CommandTester;
 use PHPUnit_Framework_Assert as Assertion;
-use Symfony\Component\Validator\Validation;
+use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\Validator\Constraints;
+use Symfony\Component\Validator\Validation;
 
 /**
  * Class CommandTesterTrait
@@ -80,7 +80,8 @@ trait TestTrait
 
         // store errors
         foreach ($violations as $error) {
-            $this->errors[] =  "\e[1;31m× \033[0m". 'Field ' . $error->getPropertyPath() . ' caused an error: ' . $error->getMessage();
+            $this->errors[] = "\e[1;31m× \033[0m" .
+                'Field ' . $error->getPropertyPath() . ' caused an error: ' . $error->getMessage();
         }
     }
 }
