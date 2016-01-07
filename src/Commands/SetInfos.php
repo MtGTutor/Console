@@ -1,5 +1,6 @@
 <?php namespace MtGTutor\Console\Commands;
 
+use MtGTutor\Console\Scraper;
 use Goutte\Client;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -31,6 +32,11 @@ class SetInfos extends Command
     protected $exists = false;
 
     /**
+     * @var \MtGTutor\Console\Scraper
+     */
+    protected $scraper;
+
+    /**
      * @var array
      */
     protected $data = [
@@ -44,10 +50,23 @@ class SetInfos extends Command
     ];
 
     /**
+     * Set Scraper
+     * @param \MtGTutor\Console\Scraper $scraper
+     */
+    public function setScraper(Scraper $scraper)
+    {
+        $this->scraper = $scraper;
+    }
+
+    /**
      * Configure command
      */
     protected function configure()
     {
+        // Sets the scraper
+        $this->setScraper(new Scraper(new Client()));
+
+        // Configure command
         $this->setName('set:info')
             ->addArgument(
                 'set',
@@ -101,16 +120,14 @@ EOT
         $this->data['code'] = $input->getArgument('set');
 
         // Fetch WotC website
-        $client = new Client();
-        $crawler = $client->request('GET', $this->url);
+        $crawler = $this->scraper->request($this->url);
 
-        $crawler->filter('.card-set-archive-table > ul > li > a > span.logo > img')->each(function (Crawler $node) use (
-            &$client
-        ) {
+        $crawler->filter('.card-set-archive-table > ul > li > a > span.logo > img')->each(function (Crawler $node) {
             $logo = $node->attr('src');
-            $this->exists = true;
 
             if ($this->setExists($logo)) {
+                $this->exists = true;
+
                 // Get Logo + Icon + Name
                 $siblings = $node->parents()->first()->siblings();
 
@@ -119,7 +136,7 @@ EOT
                 $this->data['name'] = trim($siblings->eq(1)->text());
 
                 // go to next page
-                $crawler = $this->crawlNextPage($node, $client);
+                $crawler = $this->crawlNextPage($node);
 
                 // Fetch block, number of cards and release date
                 $crawler->filter('.tab-content.current > p')->each(function (Crawler $node, $i) {
@@ -153,20 +170,18 @@ EOT
 
     /**
      * @param \Symfony\Component\DomCrawler\Crawler $crawler
-     * @param \Goutte\Client                        $client
      * @return \Symfony\Component\DomCrawler\Crawler
      */
-    protected function crawlNextPage(Crawler $crawler, Client $client)
+    protected function crawlNextPage(Crawler $crawler)
     {
         // Go to details page
         $link = $crawler->parents()->parents()->link();
-        $crawler = $client->click($link);
+        $crawler = $this->scraper->click($link);
 
         // Go to to info page (if exists)
         $anchor = $crawler->selectLink('Info');
         if ($anchor->count()) {
-            $link = $anchor->link();
-            $crawler = $client->click($link);
+            $crawler = $this->scraper->click($anchor->link());
         }
 
         return $crawler;
