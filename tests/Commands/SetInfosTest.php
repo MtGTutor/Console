@@ -21,7 +21,7 @@ class SetInfosTest extends \PHPUnit_Framework_TestCase
     /**
      * @var string
      */
-    protected $path = __DIR__ . '/../data/';
+    protected $path;
 
     /**
      * Sets command
@@ -31,6 +31,8 @@ class SetInfosTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
         $this->setupApp();
         $this->setCommandTester('set:info');
+
+        $this->path = __DIR__ . '/../data/';
 
         // Mock scraper, so we don't have to fetch the data from wizards in each test :)
         $this->scraperMock = $this->getMock('MtGTutor\Console\Scraper', ['request', 'click'], [new Client()]);
