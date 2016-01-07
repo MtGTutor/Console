@@ -199,7 +199,7 @@ EOT
             preg_match('~<strong>Number of Cards:\s*<\/strong>[^\d]*(\d+)<?~m', $node->html(), $number);
 
             $this->data['block'] = $block[1];
-            $this->data['number'] = (int)$number[1];
+            $this->data['number'] = (int) $number[1];
         }
 
         // get release date
